@@ -4,7 +4,7 @@
 django与vue进行前后端分离使用jwt登录权限认证
 
 #### 软件架构
-软件架构说明
+软件架构说明django与vue的前后端分离,采用drf框架与jwt权限认证
 
 
 #### 安装教程
@@ -15,9 +15,11 @@ django与vue进行前后端分离使用jwt登录权限认证
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  python3 manage.py makemigrations app(后端命令)
+2.  python3 manage.py migrate(后端命令)
+3.  python manage.py createsuperuser(生成超级用户)
+3.  npm install(前端安装依赖)
+3.  npm run serve(启动)
 
 #### 参与贡献
 
