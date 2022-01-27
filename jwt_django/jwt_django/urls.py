@@ -16,11 +16,36 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework.documentation import include_docs_urls
+
+from app.views import UserInfoView, TokenBaseView
+
+schema_view = get_schema_view(
+    openapi.Info(title="swaggerAPI文档",
+                 default_version="v1",
+                 description="API文档",
+                 terms_of_service="",
+                 contact=openapi.Contact(email="1348977728@qq.com"),
+                 license=openapi.License(name="MIT")),
+    public=True,
+    authentication_classes=(),
+    permission_classes=(),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # 配置总路由
     path('jwt/', include('app.urls')),
-    url(r"user/login", TokenObtainPairView.as_view(), name="user_login"),
+    # 登录路由
+    url(r"user/login", TokenBaseView.as_view(), name="user_login"),
+    # 获取身份路由
+    url(r"user/info", UserInfoView.as_view(), name="user_info"),
+    # drf内置API文档
+    url(r"docs/", include_docs_urls(title="drf内置的api文档")),
+    # 配置swagger的配置
+    url(r"swagger/", schema_view.with_ui("swagger",
+                                         cache_timeout=0), name="schema-swagger"),
+    url(r"redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]

@@ -6,14 +6,16 @@ from django.conf.urls import url
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from .views import UserRegViewSet
+from .views import UserRegViewSet, StudentViewSet, TestView
 
 urlpatterns = [
     url(r"token/", TokenObtainPairView.as_view(), name="jwt_token"),
     url(r"token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    url(r"student/", StudentViewSet.as_view(), name="student"),
+    url(r"^test/$", TestView.as_view(), name="test"),
 ]
 
 router = routers.DefaultRouter()
+# 注册用户视图
 router.register(r'users', UserRegViewSet, basename='user_register')
-
 urlpatterns += router.urls

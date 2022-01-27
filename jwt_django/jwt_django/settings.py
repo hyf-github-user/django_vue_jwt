@@ -38,37 +38,29 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 注册app
     'rest_framework',
+    'drf_yasg',
     'corsheaders',
     'app.apps.AppConfig',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-#         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ],
-#     'DEFAULT_SCHEMA_CLASS': "rest_framework.schemas.AutoSchema",
-#     # 认证的类
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'rest_framework.authentication.TokenAuthentication',
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#         'rest_framework.authentication.BasicAuthentication',
-#         'rest_framework.authentication.SessionAuthentication',
-#     ]
-# }
-
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend'
-    ],
+    # 权限认证
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # 使用rest_framework_simplejwt验证身份
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'  # 默认权限为验证用户
     ],
 }
 
+# simplejwt配置， 需要导入datetime模块
 SIMPLE_JWT = {
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=4),
-    'ROTATE_REFRESH_TOKENS': True,
+    # token有效时长
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    # token刷新后的有效时间
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 # SIMPLE_JWT = {
@@ -96,18 +88,18 @@ SIMPLE_JWT = {
 # 绑定用户系统,自定义用户验证
 AUTH_USER_MODEL = "app.UserProfile"
 
-# # swagger认证配置
-# SWAGGER_SETTINGS = {
-#     'SECURITY_DEFINITIONS': {
-#         'api_key': {
-#             'type': 'apiKey',
-#             'in': 'header',
-#             'name': 'Authorization'
-#         }
-#     },
-#     'USE_SESSION_AUTH': False,
-#     'JSON_EDITOR': True,
-# }
+# swagger认证配置
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+    'USE_SESSION_AUTH': False,
+    'JSON_EDITOR': True,
+}
 
 MIDDLEWARE = [
     # 跨域中间件
