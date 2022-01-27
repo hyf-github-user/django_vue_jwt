@@ -70,9 +70,9 @@ export default {
         if (valid) {
           console.log(this.ruleForm.username)
           login(this.ruleForm).then(response => {
-            console.log(response)
+            console.log('response:', response)
             // 保存token
-            this.$store.commit('mSetTokenInfo', response.data.access)
+            this.$store.commit('mSetTokenInfo', response.access)
             this.$router.push('/home')
           }).catch(error => {
             console.log(error)

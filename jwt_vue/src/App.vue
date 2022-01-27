@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
+      <!--粒子特效-->
       <vue-particles
         color="#555"
         :particleOpacity="0.7"
@@ -19,8 +20,6 @@
         clickMode="push"
         class="lizi"
       />
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
     </div>
     <router-view/>
   </div>
@@ -47,11 +46,13 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-body{
+
+body {
   width: 100%;
   background-color: dodgerblue;
 }
-.lizi{
+
+.lizi {
   position: fixed;
   top: 0;
   width: 100%;
