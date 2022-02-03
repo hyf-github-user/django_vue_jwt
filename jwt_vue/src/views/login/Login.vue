@@ -63,16 +63,15 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['mSetTokenInfo']),
+    ...mapMutations(['SET_TOKEN']),
     // 提交登录表单
     submitForm (formName) {
       this.$refs[formName].validate((valid) => { // 校验表单数据
         if (valid) {
-          console.log(this.ruleForm.username)
           login(this.ruleForm).then(response => {
-            console.log('response:', response)
             // 保存token
-            this.$store.commit('mSetTokenInfo', response.access)
+            this.SET_TOKEN(response.access)
+            // this.$store.commit('mSetTokenInfo', response.access)
             this.$router.push('/home')
           }).catch(error => {
             console.log(error)

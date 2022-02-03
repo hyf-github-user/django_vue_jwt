@@ -14,7 +14,7 @@ service.interceptors.request.use(
   config => {
     if (store.getters.token) {
       // jwt验证
-      config.headers.Authorization = 'jwt' + ' ' + getToken()
+      config.headers.Authorization = 'Bearer' + ' ' + getToken()
     }
     return config
   },
@@ -28,8 +28,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    console.log('res:===', res)
-    console.log(response, '========')
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
       Message({
