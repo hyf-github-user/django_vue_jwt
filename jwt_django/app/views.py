@@ -1,14 +1,12 @@
 from django.contrib.auth import get_user_model
-from rest_framework import mixins, viewsets, views, permissions
+from rest_framework import mixins, viewsets, views
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt import authentication
-
-from rest_framework.generics import RetrieveAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-
-from .serializers import UserRegSerializer, StudentSerializer, UserInfoSerializer, TokenBaseSerializer
 from .models import Student
+from .serializers import UserRegSerializer, UserInfoSerializer, TokenBaseSerializer
 
 # Create your views here.
 
@@ -62,14 +60,13 @@ class StudentViewSet(views.APIView):
 
 class UserInfoView(RetrieveAPIView):
     serializer_class = UserInfoSerializer
-
+    # 用户必须登录
     permission_classes = (IsAuthenticated,)
+    # jwt认证方式
     authentication_classes = [authentication.JWTAuthentication]
 
     # 获取当前已经登录用户信息  传入
     def get_object(self):
-        print('************************userinfo******************************')
-        print(self.request.user)
         return self.request.user
 
 

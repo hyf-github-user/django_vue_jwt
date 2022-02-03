@@ -47,10 +47,11 @@ class UserInfoSerializer(serializers.ModelSerializer):
     """
     扩展的User的序列化器
     """
+    code = serializers.IntegerField(label='code', read_only=True, default=200)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'level']
+        fields = ['id', 'username', 'level', 'code']
 
 
 class TokenBaseSerializer(TokenObtainPairSerializer):
