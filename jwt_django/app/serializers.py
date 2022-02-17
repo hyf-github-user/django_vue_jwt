@@ -37,10 +37,11 @@ class StudentSerializer(serializers.ModelSerializer):
     """
     学生的序列化器
     """
+    code = serializers.IntegerField(label='code', read_only=True, default=200)
 
     class Meta:
         model = Student  # 指定的模型类
-        fields = ('pk', 'name', 'sex', 'sid',)  # 需要序列化的属性
+        fields = ('name', 'sex', 'sid', 'code')  # 需要序列化的属性
 
 
 class UserInfoSerializer(serializers.ModelSerializer):

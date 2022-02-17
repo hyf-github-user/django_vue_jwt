@@ -3,10 +3,11 @@ from rest_framework import mixins, viewsets, views
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt import authentication
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Student
-from .serializers import UserRegSerializer, UserInfoSerializer, TokenBaseSerializer
+from .serializers import UserRegSerializer, UserInfoSerializer, TokenBaseSerializer, StudentSerializer
 
 # 继承Django的用户表
 User = get_user_model()
@@ -31,27 +32,15 @@ class UserRegViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     permission_classes = ()
 
 
-class StudentViewSet(views.APIView):
+class StudentViewSet(ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     # authentication_classes = [authentication.JWTAuthentication]
-    # # # 权限的选择
-    # # authentication_classes = ()
-    # # # 使用什么进行认证
-    # # permission_classes = ()
+    # # 权限的选择
+    # authentication_classes = ()
+    # # 使用什么进行认证
+    # permission_classes = ()
     queryset = Student.objects.all()
-    serializer_class = Student
-
-    def get(self, request, *args, **kwargs):
-        student = Student.objects.get(name='hyf')
-        return Response("查询成功!", status=200)
-
-    def post(self, request, *args, **kwargs):
-        name = request.data.get('name')
-        sex = request.data.get('sex')
-        sid = request.data.get('sid')
-        student = Student(name=name, sex=sex, sid=sid)
-        student.save()
-        return student
+    serializer_class = StudentSerializer
 
 
 class UserInfoView(RetrieveAPIView):
