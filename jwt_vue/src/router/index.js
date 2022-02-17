@@ -39,11 +39,11 @@ router.beforeEach(async (to, from, next) => {
     } else {
       // 判断是否有roles
       const hasRoles = store.getters.levels && store.getters.levels.length > 0
-      console.log('hasRoles', hasRoles)
       if (hasRoles) {
         next()
       } else {
         // 获取身份信息
+        // store.dispatch('GetInfo')
         store.dispatch('GetInfo')
         next()
       }

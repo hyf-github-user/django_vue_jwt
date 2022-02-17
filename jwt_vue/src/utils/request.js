@@ -29,7 +29,12 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     // if the custom code is not 20000, it is judged as an error.
+
     if (res.code !== 200) {
+      // 特意针对student接口的响应
+      if (res[1].code === 200) {
+        return res
+      }
       Message({
         message: res.message,
         type: 'error',
@@ -49,6 +54,7 @@ service.interceptors.response.use(
           })
         })
       }
+
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res

@@ -32,6 +32,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         // 向后台请求用户的身份权限信息
         getInfo(state.token).then(response => {
+          console.log('GetInfo', response)
           commit('SET_ID', response.id)
           commit('SET_USERNAME', response.username)
           commit('SET_LEVELS', response.level)
