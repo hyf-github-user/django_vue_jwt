@@ -8,9 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import Student
 from .serializers import UserRegSerializer, UserInfoSerializer, TokenBaseSerializer
 
-# Create your views here.
-
-
+# 继承Django的用户表
 User = get_user_model()
 
 
@@ -44,8 +42,6 @@ class StudentViewSet(views.APIView):
     serializer_class = Student
 
     def get(self, request, *args, **kwargs):
-        print(request.data)
-        # name = request.query_params('name')
         student = Student.objects.get(name='hyf')
         return Response("查询成功!", status=200)
 
@@ -59,6 +55,9 @@ class StudentViewSet(views.APIView):
 
 
 class UserInfoView(RetrieveAPIView):
+    """
+    获取用户身份权限信息的接口
+    """
     serializer_class = UserInfoSerializer
     # 用户必须登录
     permission_classes = (IsAuthenticated,)
@@ -71,5 +70,9 @@ class UserInfoView(RetrieveAPIView):
 
 
 class TestView(views.APIView):
+    """
+    测试接口
+    """
+
     def get(self, request):
         return Response('This is Index Page!', status=200)
