@@ -3,13 +3,13 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-// create an axios instance
+// 创建axios实例
 const service = axios.create({
   baseURL: 'http://127.0.0.1:8000/', // url = base url + request url
   timeout: 5000 // request timeout
 })
 
-// request interceptor,拦截器
+// 请求拦截器
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
