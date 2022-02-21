@@ -52,7 +52,6 @@ class UserInfoView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     # jwt认证方式
     authentication_classes = [authentication.JWTAuthentication]
-
     # 获取当前已经登录用户信息  传入
     def get_object(self):
         return self.request.user
