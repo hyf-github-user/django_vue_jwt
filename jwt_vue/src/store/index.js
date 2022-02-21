@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { getToken, setToken } from '@/utils/auth'
 import { getInfo } from '@/api/user'
+import { constantRoutes } from '@/router'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -10,7 +11,11 @@ export default new Vuex.Store({
     token: getToken('token') || {},
     id: '',
     username: '',
-    levels: []
+    levels: [],
+    // 所有的路由
+    routes: [],
+    // 根据身份权限生成的路由
+    addRoutes: []
   },
   mutations: {
     SET_TOKEN (state, token) {
@@ -25,6 +30,10 @@ export default new Vuex.Store({
     },
     SET_LEVELS: (state, level) => {
       state.levels = level
+    },
+    SET_ROUTES: (state, routes) => {
+      state.addRoutes = routes
+      state.routes = constantRoutes.concat(routes)
     }
   },
   actions: {
@@ -36,8 +45,10 @@ export default new Vuex.Store({
           commit('SET_ID', response.id)
           commit('SET_USERNAME', response.username)
           commit('SET_LEVELS', response.level)
+          resolve(response)
         }).catch(error => {
           console.log(error)
+          reject(error)
         })
       })
     }

@@ -72,7 +72,7 @@ export default {
             // 保存token
             this.SET_TOKEN(response.access)
             // this.$store.commit('mSetTokenInfo', response.access)
-            this.$router.push('/home')
+            this.$router.push('/index')
           }).catch(error => {
             console.log(error)
           })
